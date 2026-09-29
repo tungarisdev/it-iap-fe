@@ -237,6 +237,7 @@ const UserFeedbacksSection = () => {
 
         const res = await userFeedbackService.getFeedbacks(params as never);
         const data = res.data.data;
+        if (!data) throw new Error("Feedback response data is missing");
         const pageData = data.feedbacks;
 
         if (append) {

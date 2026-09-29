@@ -18,16 +18,12 @@ import {
   ChevronsLeft,
   ChevronsRight,
   Eye,
-  SlidersHorizontal,
   Loader2,
   AlertCircle,
   Layers,
-  Sparkles,
 } from "lucide-react";
 import adminPromotionService, {
   type PromotionItem,
-  type ApplicableTierType,
-  type DiscountType,
   calculateDiscountPrice,
 } from "../../../services/admin/adminPromotionService";
 import useTierStore from "../../../store/tierStore";

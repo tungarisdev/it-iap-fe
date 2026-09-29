@@ -38,7 +38,7 @@ export interface PaginatedData<T> {
   totalPages: number;
 }
 
-// ── Prompt List Item (from GET /admin_prompts) ──
+// ── Prompt List Item (from GET /admin-prompts) ──
 export interface PromptListItem {
   id: number;
   promptKey: string;
@@ -49,7 +49,7 @@ export interface PromptListItem {
   active: boolean;
 }
 
-// ── Prompt Version Detail (from GET /prompt_versions/detail) ──
+// ── Prompt Version Detail (from GET /prompt-versions/detail) ──
 export interface PromptVersionDetail {
   id: number;
   promptKey: string;
@@ -63,7 +63,7 @@ export interface PromptVersionDetail {
   active: boolean;
 }
 
-// ── GET /admin_prompts Request Params ──
+// ── GET /admin-prompts Request Params ──
 export interface GetPromptsParams {
   promptKey?: string;
   applyFor?: string;
@@ -71,7 +71,7 @@ export interface GetPromptsParams {
   pages?: number;
 }
 
-// ── POST /admin_prompts Request ──
+// ── POST /admin-prompts Request ──
 export interface PromptVersionRequest {
   version: string;
   provider: string;
@@ -88,19 +88,19 @@ export interface CreatePromptRequest {
   promptVersionRequest: PromptVersionRequest;
 }
 
-// ── PATCH /prompt_versions/active Request ──
+// ── PATCH /prompt-versions/active Request ──
 export interface ActivateVersionRequest {
   promptKey: string;
   version: string;
 }
 
-// ── GET /prompt_versions/detail Request ──
+// ── GET /prompt-versions/detail Request ──
 export interface GetVersionDetailParams {
   promptKey: string;
   version: string;
 }
 
-// ── POST /admin_prompts/{id}/versions Request ──
+// ── POST /admin-prompts/{id}/versions Request ──
 export interface AddVersionRequest {
   adminPromptId: number;
   version: string;
@@ -135,7 +135,7 @@ export const PROVIDERS = ["GOOGLE"] as const;
 
 // ── Admin Prompt Service ──
 const adminPromptService = {
-  // GET /admin_prompts — List all prompts
+  // GET /admin-prompts — List all prompts
   getPrompts: (params: GetPromptsParams) => {
     // Build clean params: omit `active` when undefined to get all results
     const cleanParams: Record<string, string | number | boolean> = {};
@@ -145,30 +145,30 @@ const adminPromptService = {
     if (params.pages !== undefined) cleanParams.pages = params.pages;
 
     return apiClient.get<ApiResponse<PaginatedData<PromptListItem>>>(
-      "/admin_prompts",
+      "/admin-prompts",
       { params: cleanParams }
     );
   },
 
-  // POST /admin_prompts — Create a new prompt with first version
+  // POST /admin-prompts — Create a new prompt with first version
   createPrompt: (payload: CreatePromptRequest) =>
-    apiClient.post<ApiResponse<PromptListItem>>("/admin_prompts", payload),
+    apiClient.post<ApiResponse<PromptListItem>>("/admin-prompts", payload),
 
-  // PATCH /prompt_versions/active — Activate a specific version
+  // PATCH /prompt-versions/active — Activate a specific version
   activateVersion: (payload: ActivateVersionRequest) =>
-    apiClient.patch<ApiResponse>("/prompt_versions/active", payload),
+    apiClient.patch<ApiResponse>("/prompt-versions/active", payload),
 
-  // GET /prompt_versions/detail — Get version detail
+  // GET /prompt-versions/detail — Get version detail
   getVersionDetail: (params: GetVersionDetailParams) =>
     apiClient.get<ApiResponse<PromptVersionDetail>>(
-      "/prompt_versions/detail",
+      "/prompt-versions/detail",
       { params }
     ),
 
-  // POST /admin_prompts/{id}/versions — Add a new version to existing prompt
+  // POST /admin-prompts/{id}/versions — Add a new version to existing prompt
   addVersion: (adminPromptId: number, payload: Omit<AddVersionRequest, "adminPromptId">) =>
     apiClient.post<ApiResponse<PromptVersionDetail>>(
-      `/admin_prompts/versions`,
+      `/admin-prompts/versions`,
       { adminPromptId, ...payload }
     ),
 };

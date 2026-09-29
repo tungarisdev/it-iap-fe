@@ -159,7 +159,7 @@ const ActivityLog = ({
                       {item.description}
                     </td>
                     <td className="py-3 pr-4 text-sm text-zinc-600">
-                      {item.adminEmail.split("@")[0]}
+                      {item.adminEmail?.split("@")[0] ?? "—"}
                     </td>
                     <td className="py-3 text-sm text-zinc-400 whitespace-nowrap">
                       {item.createdAt}

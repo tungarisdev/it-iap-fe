@@ -164,7 +164,7 @@ const interviewService = {
   // Get hint for a question
   getQuestionHint: (interviewQuestionId: number) =>
     apiClient.get<ApiResponse<QuestionHint>>(
-      `/interviews/interviewQuestion/${interviewQuestionId}/hint`
+      `/interviews/interview-question/${interviewQuestionId}/hint`
     ),
 
   // Get interview feedback/results

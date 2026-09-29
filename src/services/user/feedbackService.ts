@@ -45,8 +45,8 @@ const userFeedbackService = {
     }),
 
   // Delete own feedback
-  deleteFeedback: (id: number) =>
-    apiClient.delete<ApiResponse<null>>(`/feedbacks/${id}`),
+  deleteFeedback: (feedbackId: number) =>
+    apiClient.delete<ApiResponse<null>>(`/feedbacks/${feedbackId}`),
 };
 
 export default userFeedbackService;

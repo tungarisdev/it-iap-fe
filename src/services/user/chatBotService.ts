@@ -37,22 +37,22 @@ const chatBotService = {
 
   // Get all chat sessions
   getSessions: () =>
-    apiClient.get<ApiResponse<ChatSession[]>>("/chatSessions"),
+    apiClient.get<ApiResponse<ChatSession[]>>("/chat-sessions"),
 
   // Create a new chat session
   createSession: (payload: CreateSessionPayload) =>
-    apiClient.post<ApiResponse<ChatSession>>("/chatSessions", payload),
+    apiClient.post<ApiResponse<ChatSession>>("/chat-sessions", payload),
 
   // Delete a chat session
   deleteSession: (chatSessionId: number) =>
     apiClient.delete<ApiResponse<string>>(
-      `/chatSessions/${chatSessionId}`
+      `/chat-sessions/${chatSessionId}`
     ),
 
   // Get messages for a specific chat session
   getMessages: (chatSessionId: number) =>
     apiClient.get<ApiResponse<SessionMessage[]>>(
-      `/chatSessions/${chatSessionId}/messages`
+      `/chat-sessions/${chatSessionId}/messages`
     ),
 };
 

@@ -333,6 +333,7 @@ const InterviewSessionPage = () => {
       try {
         const res = await interviewService.getCurrentQuestion(Number(interviewId));
         const questionData = res.data.data;
+        if (!questionData) throw new Error("Question response data is missing");
 
         if (questionData.isComplete) {
           if (questionData.interviewMode === "INTERACTIVE_INTERVIEW") {
@@ -347,7 +348,7 @@ const InterviewSessionPage = () => {
                 const msgRes = await interviewService.getInteractiveMessages(
                   questionData.interviewQuestionId
                 );
-                setMessages(msgRes.data.data);
+                setMessages(msgRes.data.data ?? []);
               } catch {
                 // No chat history yet
               }
@@ -362,7 +363,7 @@ const InterviewSessionPage = () => {
                 const msgRes = await interviewService.getInteractiveMessages(
                   questionData.interviewQuestionId
                 );
-                setMessages(msgRes.data.data);
+                setMessages(msgRes.data.data ?? []);
               } catch {
                 // No chat history yet
               }
@@ -392,7 +393,7 @@ const InterviewSessionPage = () => {
               const msgRes = await interviewService.getInteractiveMessages(
                 questionData.interviewQuestionId
               );
-              setMessages(msgRes.data.data);
+              setMessages(msgRes.data.data ?? []);
             } catch {
               // No history yet
             }
@@ -447,6 +448,7 @@ const InterviewSessionPage = () => {
       );
 
       const result = res.data.data;
+      if (!result) throw new Error("Answer response data is missing");
 
       // Add AI response
       addMessage({ role: "ASSISTANT", content: result.content });
@@ -533,6 +535,7 @@ const InterviewSessionPage = () => {
       );
 
       const nextQuestion = res.data.data;
+      if (!nextQuestion) throw new Error("Next question response data is missing");
 
       // Save current to history
       saveCurrentToHistory("");
@@ -567,7 +570,9 @@ const InterviewSessionPage = () => {
       const res = await interviewService.getQuestionHint(
         currentQuestion.interviewQuestionId
       );
-      setHint(res.data.data.hint);
+      const hintData = res.data.data;
+      if (!hintData) throw new Error("Hint response data is missing");
+      setHint(hintData.hint);
       setIsHintVisible(true);
     } catch {
       setError(t("errors.hintFailed"));

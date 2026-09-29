@@ -12,9 +12,9 @@ const adminFeedbackService = {
     }),
 
   // Reply to a feedback (send {} to remove reply)
-  replyFeedback: (id: number, payload: { adminReply?: string }) =>
+  replyFeedback: (feedbackId: number, payload: { adminReply?: string }) =>
     apiClient.patch<ApiResponse<FeedbackItem>>(
-      `/feedbacks/${id}/reply`,
+      `/feedbacks/${feedbackId}/reply`,
       payload
     ),
 

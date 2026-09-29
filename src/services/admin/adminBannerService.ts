@@ -35,13 +35,13 @@ const adminBannerService = {
       headers: { "Content-Type": "multipart/form-data" },
     }),
 
-  updateBanner: (id: number, formData: FormData) =>
-    apiClient.put<ApiResponse<AdminBannerItem>>(`/banners/${id}`, formData, {
+  updateBanner: (bannerId: number, formData: FormData) =>
+    apiClient.put<ApiResponse<AdminBannerItem>>(`/banners/${bannerId}`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     }),
 
-  toggleBannerStatus: (id: number, isActive: boolean) =>
-    apiClient.patch<ApiResponse<string>>(`/banners/${id}/status`, null, {
+  toggleBannerStatus: (bannerId: number, isActive: boolean) =>
+    apiClient.patch<ApiResponse<string>>(`/banners/${bannerId}/status`, null, {
       params: { isActive },
     }),
 };

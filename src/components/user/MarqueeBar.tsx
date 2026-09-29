@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Megaphone } from "lucide-react";
+import { X } from "lucide-react";
 
 interface MarqueeBarProps {
   text: string;

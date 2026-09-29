@@ -98,6 +98,7 @@ const ReportsSection = () => {
 
       const res = await userReportService.getMyReports(params);
       const data = res.data.data;
+      if (!data) throw new Error("Report response data is missing");
       setItems(data.content);
       setTotalPages(data.totalPages);
     } catch (err) {

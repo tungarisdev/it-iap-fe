@@ -87,8 +87,8 @@ const adminUserService = {
   createUser: (payload: CreateUserRequest) =>
     apiClient.post<ApiResponse<UserEntity>>("/users", payload),
 
-  updateUser: (id: string, payload: UpdateUserRequest) =>
-    apiClient.put<ApiResponse<UserEntity>>(`/users/${id}`, payload),
+  updateUser: (userId: string, payload: UpdateUserRequest) =>
+    apiClient.put<ApiResponse<UserEntity>>(`/users/${userId}`, payload),
 };
 
 export default adminUserService;

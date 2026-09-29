@@ -76,7 +76,7 @@ export interface ActivityItem {
   id: number;
   actionType: string;
   description: string;
-  adminEmail: string;
+  adminEmail: string | null;
   createdAt: string;
 }
 

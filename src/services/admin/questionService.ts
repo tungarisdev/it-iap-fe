@@ -96,8 +96,8 @@ const adminQuestionService = {
   createQuestion: (payload: CreateQuestionRequest) =>
     apiClient.post<ApiResponse<QuestionEntity>>("/questions", payload),
 
-  updateQuestion: (id: number, payload: UpdateQuestionRequest) =>
-    apiClient.put<ApiResponse<QuestionEntity>>(`/questions/${id}`, payload),
+  updateQuestion: (questionId: number, payload: UpdateQuestionRequest) =>
+    apiClient.put<ApiResponse<QuestionEntity>>(`/questions/${questionId}`, payload),
 
   generateQuestionByAI: (payload: AIGenerateQuestionRequest) =>
     apiClient.post<ApiResponse<null>>("/ai/generate-question", payload),

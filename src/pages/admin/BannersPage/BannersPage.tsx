@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
-  Megaphone,
   Plus,
   Edit2,
   Image as ImageIcon,
@@ -132,8 +131,8 @@ const BannersPage: React.FC = () => {
     setSubmitting(true);
     setErrorMsg(null);
 
-    const finalTitle = title.trim() || null;
-    const finalContent = content.trim() || null;
+    const finalTitle = title.trim();
+    const finalContent = content.trim();
 
     const formData = new FormData();
     formData.append("title", finalTitle);

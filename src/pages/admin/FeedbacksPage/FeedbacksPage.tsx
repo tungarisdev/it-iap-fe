@@ -396,6 +396,7 @@ const FeedbacksPage = () => {
 
       const res = await adminFeedbackService.getFeedbacks(params as never);
       const data = res.data.data;
+      if (!data) throw new Error("Feedback response data is missing");
       const pageData = data.feedbacks;
 
       setItems(pageData?.content || []);
@@ -426,11 +427,13 @@ const FeedbacksPage = () => {
       const res = await adminFeedbackService.replyFeedback(replyTarget.id, {
         adminReply: replyContent,
       });
+      const updatedFeedback = res.data.data;
+      if (!updatedFeedback) throw new Error("Feedback response data is missing");
       // Update item in list
       setItems((prev) =>
         prev.map((item) =>
           item.id === replyTarget.id
-            ? { ...item, adminReply: res.data.data.adminReply }
+            ? { ...item, adminReply: updatedFeedback.adminReply }
             : item
         )
       );

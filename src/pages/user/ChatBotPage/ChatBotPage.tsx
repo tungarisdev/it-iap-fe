@@ -208,6 +208,7 @@ const ChatBotPage = () => {
           : userMessage;
         const createRes = await chatBotService.createSession({ title });
         const newSession = createRes.data.data;
+        if (!newSession) throw new Error("Chat session response data is missing");
         sessionId = newSession.id;
         setSessions((prev) => [newSession, ...prev]);
         setActiveSessionId(sessionId);
@@ -225,7 +226,9 @@ const ChatBotPage = () => {
         sessionId,
         userMessage,
       });
-      const aiResponse = res.data.data.aiResponse;
+      const responseData = res.data.data;
+      if (!responseData) throw new Error("Chat response data is missing");
+      const aiResponse = responseData.aiResponse;
       updateSessionMessages(sessionId, (prev) => [
         ...prev,
         { role: "assistant", content: aiResponse },

@@ -649,7 +649,6 @@ interface PostCardProps {
 const PostCard = ({
   post,
   isMineTab,
-  lang,
   onReact,
   onToggleVisibility,
   onDelete,

@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "motion/react";
 import {
-  Flag,
   Loader2,
   AlertCircle,
   Search,
@@ -98,6 +97,7 @@ const AdminReportsPage = () => {
 
       const res = await adminReportService.getReports(params);
       const data = res.data.data;
+      if (!data) throw new Error("Report response data is missing");
       setItems(data.content);
       setTotalPages(data.totalPages);
     } catch (err) {
@@ -144,6 +144,7 @@ const AdminReportsPage = () => {
 
       // Update local state
       const updated = res.data.data;
+      if (!updated) throw new Error("Report response data is missing");
       setItems((prev) =>
         prev.map((item) =>
           item.reportId === updated.reportId ? updated : item

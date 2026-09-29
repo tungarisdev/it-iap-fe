@@ -1,34 +1,43 @@
-name: CI
+name: Continuous Integration (CI)
 
 on:
   push:
-    branches:
-      - main
-      - develop
-      - 'feature/**'
-
+    branches: [main, develop, "feature/**"]
   pull_request:
-    branches:
-      - main
-      - develop
+    branches: [main, develop]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: frontend-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [22]
-
+    timeout-minutes: 20
     steps:
       - name: Checkout source
-        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a
+      - name: Set up Node.js 22
+        uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: "22"
           cache: npm
 
       - name: Install dependencies
         run: npm ci
+
+      # Existing UI code still has React Hooks lint debt. Keep the report visible
+      # without allowing unrelated legacy findings to block deploys.
+      - name: Lint source (advisory)
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Build frontend container
+        run: docker build --tag itiap-fe:ci .
